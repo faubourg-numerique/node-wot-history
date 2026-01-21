@@ -2,6 +2,8 @@ import { HttpClientFactory } from "@node-wot/binding-http";
 import { Servient } from "@node-wot/core";
 import sleep from "sleep-promise";
 
+import { useHistory } from "../src";
+
 const servient = new Servient();
 servient.addClientFactory(new HttpClientFactory());
 
@@ -9,6 +11,8 @@ async function main() {
     const WoT = await servient.start();
     const td = await WoT.requestThingDescription("http://localhost:8080/counter");
     const thing = await WoT.consume(td);
+
+    useHistory(thing);
 
     let interactionOutput: WoT.InteractionOutput;
 
@@ -38,6 +42,11 @@ async function main() {
 
     interactionOutput = await thing.readProperty("counter");
     console.log("Counter :", await interactionOutput.value());
+
+    await sleep(2000);
+
+    interactionOutput = await thing.readPropertyHistory("counter");
+    console.log("Counter history :", await interactionOutput.value());
 }
 
 main();

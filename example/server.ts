@@ -1,6 +1,8 @@
 import { HttpServer } from "@node-wot/binding-http";
 import { Servient } from "@node-wot/core";
 
+import { useHistory } from "../src";
+
 const servient = new Servient();
 servient.addServer(new HttpServer({ port: 8080 }));
 
@@ -9,7 +11,8 @@ const partialThingDescription = {
     properties: {
         counter: {
             type: "number",
-            readonly: true
+            readonly: true,
+            temporal: true
         }
     },
     actions: {
@@ -31,8 +34,14 @@ async function main() {
     //@ts-ignore
     const thing = await WoT.produce(partialThingDescription);
 
+    useHistory(thing);
+
     thing.setPropertyReadHandler("counter", async () => {
         return counter;
+    });
+
+    thing.setPropertyHistoryReadHandler("counter", async () => {
+        return counterHistory;
     });
 
     thing.setActionHandler("increment", async () => {
