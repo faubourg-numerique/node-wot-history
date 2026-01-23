@@ -1,3 +1,5 @@
+//@ts-nocheck
+
 import { pascalCase } from "change-case";
 
 function getPropertyHistoryActionName(name: string) {

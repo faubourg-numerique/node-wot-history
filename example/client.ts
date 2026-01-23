@@ -2,7 +2,7 @@ import { HttpClientFactory } from "@node-wot/binding-http";
 import { Servient } from "@node-wot/core";
 import sleep from "sleep-promise";
 
-import { useHistory } from "../src";
+import { useHistory } from "../dist";
 
 const servient = new Servient();
 servient.addClientFactory(new HttpClientFactory());

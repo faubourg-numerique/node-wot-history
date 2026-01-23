@@ -1,7 +1,7 @@
 import { HttpServer } from "@node-wot/binding-http";
 import { Servient } from "@node-wot/core";
 
-import { useHistory } from "../src";
+import { useHistory } from "../dist";
 
 const servient = new Servient();
 servient.addServer(new HttpServer({ port: 8080 }));
